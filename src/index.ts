@@ -1,15 +1,38 @@
+import * as dotenv from "dotenv"; // Import dotenv
+dotenv.config(); // Load environment variables from .env file
+
+console.log([process.env.TECH_WEBHOOK, process.env.PROGRAMMING_WEBHOOK]);
 import * as https from "https"; // Use named import for 'https'
 import { parseString } from "xml2js"; // Use named import for 'xml2js'
 
-const RSS_URL = "https://www.androidauthority.com/feed/";
-const WEBHOOK_URL =
-  "https://discord.com/api/webhooks/1271521389576192092/-kuXcNfrbOny0IXSekPxno_1xoECzHlwNyi_TVLfpQJFpZFsc7j3DexBWtqbWPsm0LwF";
+// Define RSS feeds with corresponding webhooks
+const RSS_FEEDS: { [key: string]: { urls: string[]; webhook: string } } = {
+  tech: {
+    urls: [
+      "https://www.androidauthority.com/feed/", // Tech feed
+    ],
+    webhook: process.env.TECH_WEBHOOK!, // Environment variable for tech webhook
+  },
+  programming: {
+    urls: [
+      "https://nodejs.org/en/feed/blog.xml", // Programming feed
+      "https://tailwindcss.com/feeds/feed.xml",
+      "https://www.ruby-lang.org/en/feeds/news.rss",
+      "https://legacy.reactjs.org/feed.xml",
+      "https://github.blog/feed/",
+    ],
+    webhook: process.env.PROGRAMMING_WEBHOOK!, // Environment variable for programming webhook
+  },
+};
 
-let lastSentItemLink: string | null = null; // To track the last sent item
+let lastSentItemLinks: { [key: string]: { [url: string]: string | null } } = {
+  tech: {},
+  programming: {},
+};
 
 // Function to fetch RSS feed
 function fetchRSSFeed(url: string): Promise<string> {
-  console.log("Fetching RSS feed...");
+  console.log(`Fetching RSS feed from: ${url}`);
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
@@ -21,7 +44,10 @@ function fetchRSSFeed(url: string): Promise<string> {
           resolve(data);
         });
       })
-      .on("error", reject);
+      .on("error", (err) => {
+        console.error(`Error fetching ${url}:`, err);
+        reject(err);
+      });
   });
 }
 
@@ -29,20 +55,27 @@ function fetchRSSFeed(url: string): Promise<string> {
 function parseRSS(xml: string): Promise<any> {
   return new Promise((resolve, reject) => {
     parseString(xml, { trim: true }, (err: Error | null, result: any) => {
-      if (err) reject(err);
-      else resolve(result);
+      if (err) {
+        console.error("Error parsing RSS:", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
     });
   });
 }
 
 // Function to send data to Discord webhook
-function sendToWebhook(data: { title: string; link: string }): void {
+function sendToWebhook(
+  webhookUrl: string,
+  data: { title: string; link: string }
+): void {
   console.log("Sending data to webhook...");
   const postData = JSON.stringify({
     content: `${data.title}\n\n${data.link}`,
   });
 
-  const url = new URL(WEBHOOK_URL);
+  const url = new URL(webhookUrl);
 
   const options = {
     hostname: url.hostname,
@@ -62,7 +95,7 @@ function sendToWebhook(data: { title: string; link: string }): void {
   });
 
   req.on("error", (e: Error) => {
-    console.error(e);
+    console.error(`Error sending to webhook:`, e);
   });
 
   req.write(postData);
@@ -72,27 +105,38 @@ function sendToWebhook(data: { title: string; link: string }): void {
 // Main function to handle fetching, parsing, and sending data
 async function handleRSSUpdate(): Promise<void> {
   console.log("Checking for updates...");
-  try {
-    const xml = await fetchRSSFeed(RSS_URL);
-    const rss = await parseRSS(xml);
-    const latestItem = rss.rss.channel[0].item[0];
 
-    const data = {
-      title: latestItem.title[0],
-      link: latestItem.link[0],
-    };
+  for (const category in RSS_FEEDS) {
+    const { urls, webhook } = RSS_FEEDS[category];
 
-    // Check if the latest item is new
-    if (data.link !== lastSentItemLink) {
-      sendToWebhook(data);
-      lastSentItemLink = data.link; // Update the last sent item link
+    for (const url of urls) {
+      console.log(webhook);
+      try {
+        const xml = await fetchRSSFeed(url);
+        const rss = await parseRSS(xml);
+        const latestItem = rss.rss.channel[0].item[0];
+
+        const data = {
+          title: latestItem.title[0],
+          link: latestItem.link[0],
+        };
+
+        // Check if the latest item is new
+        if (data.link !== lastSentItemLinks[category][url]) {
+          sendToWebhook(webhook, data);
+          lastSentItemLinks[category][url] = data.link; // Update the last sent item link for this RSS URL
+        }
+      } catch (error) {
+        console.error(
+          `Error processing ${url} in ${category} category:`,
+          error
+        );
+      }
     }
-  } catch (error) {
-    console.error("Error:", error);
   }
 }
 
-// Run the script every minute
+// Run the script every 5 minutes
 setInterval(handleRSSUpdate, 5 * 60 * 1000);
 
 // Initial run

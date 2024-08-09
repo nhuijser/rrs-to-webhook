@@ -9,6 +9,7 @@
     "start:pm2": "pm2 start build/index.js --name rss-to-webhook"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
