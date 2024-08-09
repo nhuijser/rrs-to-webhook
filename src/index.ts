@@ -10,6 +10,9 @@ const RSS_FEEDS: { [key: string]: { urls: string[]; webhook: string } } = {
   tech: {
     urls: [
       "https://www.androidauthority.com/feed/", // Tech feed
+      "https://www.sammobile.com/feed/",
+      "https://feeds.macrumors.com/MacRumors-Front",
+      "https://9to5mac.com/feed/",
     ],
     webhook: process.env.TECH_WEBHOOK!, // Environment variable for tech webhook
   },
