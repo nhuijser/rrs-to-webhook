@@ -93,7 +93,7 @@ async function handleRSSUpdate(): Promise<void> {
 }
 
 // Run the script every minute
-setInterval(handleRSSUpdate, 60 * 1000);
+setInterval(handleRSSUpdate, 5 * 60 * 1000);
 
 // Initial run
 handleRSSUpdate();
