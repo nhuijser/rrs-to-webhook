@@ -1,5 +1,18 @@
 {
+  "name": "rrs-to-webhook",
+  "version": "1.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "start:pm2": "pm2 start build/index.js --name rss-to-webhook"
+  },
   "dependencies": {
     "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "@types/xml2js": "^0.4.14"
   }
 }
