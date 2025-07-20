@@ -2,79 +2,46 @@
   "tech": {
     "webhook": "",
     "feeds": [
-      "https://www.androidauthority.com/feed/",
+      "https://www.apple.com/newsroom/rss-feed.rss",
+      "https://android-developers.googleblog.com/feeds/posts/default",
+      "https://blog.google/rss/",
       "https://www.sammobile.com/feed/",
-      "https://feeds.macrumors.com/MacRumors-Front",
-      "https://9to5mac.com/feed/",
-      "https://www.theverge.com/rss/index.xml",
-      "https://techcrunch.com/feed/",
-      "https://www.engadget.com/rss.xml",
-      "https://www.wired.com/feed/rss",
-      "https://www.gsmarena.com/rss-news-reviews.php3",
-      "https://www.androidcentral.com/feed",
-      "https://blog.google/technology/ai/rss/",
       "https://blogs.nvidia.com/feed/",
-      "https://huggingface.co/blog/feed.xml",
-      "https://www.sciencedaily.com/rss/all.xml",
-      "https://www.newscientist.com/feed/home/",
-      "https://www.space.com/feeds/all",
-      "https://techcrunch.com/category/startups/feed/",
-      "https://venturebeat.com/feed/",
-      "https://krebsonsecurity.com/feed/",
-      "https://www.schneier.com/feed/atom/",
-      "https://www.bleepingcomputer.com/feed/",
-      "https://cointelegraph.com/rss",
-      "https://decrypt.co/feed"
+      "https://aws.amazon.com/blogs/aws/feed/",
+      "https://newsroom.spotify.com/feed/"
     ]
   },
   "developing": {
     "webhook": "",
     "feeds": [
-      "https://nodejs.org/en/feed/blog.xml",
-      "https://tailwindcss.com/feeds/feed.xml",
-      "https://www.ruby-lang.org/en/feeds/news.rss",
-      "https://legacy.reactjs.org/feed.xml",
       "https://github.blog/feed/",
-      "https://stackoverflow.blog/feed/",
-      "https://css-tricks.com/feed/",
-      "https://www.freecodecamp.org/news/rss/",
-      "https://hackernoon.com/feed",
-      "https://www.smashingmagazine.com/feed/",
-      "https://martinfowler.com/feed.atom",
-      "https://blog.codinghorror.com/rss/",
-      "https://www.kdnuggets.com/feed",
-      "https://www.analyticsvidhya.com/feed/",
-      "https://www.r-bloggers.com/feed/",
-      "https://blog.jupyter.org/feed",
-      "https://distill.pub/rss.xml",
-      "https://kubernetes.io/feed.xml",
-      "https://aws.amazon.com/blogs/aws/feed/",
-      "https://about.gitlab.com/atom.xml",
-      "https://www.hashicorp.com/blog/feed.xml",
-      "https://www.redhat.com/en/rss/blog",
+      "https://nodejs.org/en/feed/blog.xml",
+      "https://legacy.reactjs.org/feed.xml",
+      "https://blog.angular.io/feed",
+      "https://blog.vuejs.org/feed.rss",
       "https://developer.apple.com/news/rss/news.rss",
-      "https://www.raywenderlich.com/feed",
-      "https://www.nngroup.com/feed/rss/",
-      "https://uxplanet.org/feed",
-      "https://uxdesign.cc/feed",
-      "https://www.creativebloq.com/feed"
+      "https://kubernetes.io/feed.xml",
+      "https://about.gitlab.com/atom.xml",
+      "https://www.redhat.com/en/rss/blog",
+      "https://ubuntu.com/blog/feed"
     ]
   },
   "gaming": {
     "webhook": "",
     "feeds": [
-      "https://www.polygon.com/rss/index.xml",
-      "https://www.rockpapershotgun.com/feed/",
-      "https://www.pcgamer.com/rss/",
-      "https://www.eurogamer.net/?format=rss",
-      "https://www.destructoid.com/feed/",
+      "https://blog.playstation.com/feed/",
+      "https://blog.counter-strike.net/index.php/feed/",
+      "https://feeds.ign.com/ign/games-all",
       "https://kotaku.com/rss",
-      "https://www.vg247.com/feed/",
-      "https://godotengine.org/rss.xml",
-      "https://venturebeat.com/games/feed/",
-      "https://techcrunch.com/category/gaming/feed/",
-      "https://www.dexerto.com/feed/",
-      "https://dotesports.com/feed/"
+      "https://www.polygon.com/rss/index.xml"
+    ]
+  },
+  "esports": {
+    "webhook": "",
+    "feeds": [
+      "https://dotesports.com/feed",
+      "https://vlr.gg/rss",
+      "https://www.hltv.org/rss/news"
     ]
   }
 }
